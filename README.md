@@ -10,7 +10,7 @@
   </p>
 
   <p>
-    <a href="[Aapka-Live-Link-Yahan-Dalein]">
+    <a href="https://ashishkfrontend.github.io/NexResume/">
       <img src="https://img.shields.io/badge/🔴_LIVE_DEMO-Available-success?style=for-the-badge" alt="Live Demo">
     </a>
     <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
@@ -23,11 +23,6 @@
 <br>
 
 > 🚀 **NexResume** ek fast, intuitive, aur beautifully designed web application hai jo users ko easily professional resumes create karne mein madad karta hai. 
-
-## 🔗 Live Website Preview
-Project ko live yahan dekhein:  
-👉 **[Click Here to View NexResume Live]([https://ashishkfrontend.github.io/NexResume/])**
-
 ---
 
 ## 📸 Screenshots
