@@ -26,7 +26,7 @@
 
 ## 🔗 Live Website Preview
 Project ko live yahan dekhein:  
-👉 **[Click Here to View NexResume Live]([Aapka-Live-Link-Yahan-Dalein])**
+👉 **[Click Here to View NexResume Live]([https://ashishkfrontend.github.io/NexResume/])**
 
 ---
 
