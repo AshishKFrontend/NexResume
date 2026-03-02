@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexResume Builder</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://unpkg.com/html-docx-js@0.3.1/dist/html-docx.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark-theme">
+    <div id="splash-screen" class="splash-overlay">
+        <lottie-player id="splash-bird" src="Wavey%20Birdie.json" background="transparent" speed="1" loop
+            autoplay></lottie-player>
+    </div>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <lottie-player id="header-bird" class="header-bird-anim" src="Wavey%20Birdie.json"
+                        background="transparent" speed="1" loop autoplay></lottie-player>
+                    <h1 class="logo"><span>Nex</span>Resume</h1>
+                </div>
+                <button class="btn-icon mobile-menu-btn" id="openMobileToolsBtn" title="Options & Export">
+                    <i data-feather="settings"></i>
+                </button>
+            </div>
+
+            <div class="control-panel scrollable">
+                <div class="control-group">
+                    <h3>Theme & Actions</h3>
+                    <div class="theme-actions-row">
+                        <div class="color-picker-grid" id="colorPickerGrid">
+                        </div>
+                        <div class="toolbar-vertical-divider"></div>
+
+                        <button class="btn-icon btn-circle" id="undoBtn" title="Undo (Ctrl+Z)">
+                            <i data-feather="corner-up-left" class="icon-xs"></i>
+                        </button>
+                        <button class="btn-icon btn-circle" id="redoBtn" title="Redo (Ctrl+Y)">
+                            <i data-feather="corner-up-right" class="icon-xs"></i>
+                        </button>
+
+                        <button class="btn-primary btn-circle btn-circle-glow" id="addSectionBtn" title="Add Section">
+                            <i data-feather="plus" class="icon-sm"></i>
+                        </button>
+
+                        <button class="btn-icon btn-circle" id="resetToTemplateBtn" title="Reset to Demo Template">
+                            <i data-feather="refresh-ccw" class="icon-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="placeholder-profile" class="hidden-element"></div>
+                <div class="control-group" id="group-profile-pic">
+                    <h3>Profile Picture</h3>
+                    <div class="form-group mb-0">
+                        <div class="pic-actions-row">
+                            <input type="file" id="profileImageUpload"
+                                accept="image/png, image/jpeg, image/jpg, image/gif" class="file-input">
+                            <label for="profileImageUpload"
+                                class="btn-primary btn-circle btn-circle-glow file-label-circle" title="Upload Photo">
+                                <i data-feather="upload" class="icon-sm"></i>
+                            </label>
+
+                            <button id="removeImageBtn" class="btn-icon btn-circle remove-pic-btn" title="Remove Photo">
+                                <i data-feather="trash-2" class="icon-sm"></i>
+                            </button>
+
+                            <div class="toolbar-vertical-divider"></div>
+
+                            <label class="checkbox-label-custom">
+                                <input type="checkbox" id="togglePicBorder" checked> Add Border
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="placeholder-typography" class="hidden-element"></div>
+                <div class="control-group" id="group-typography">
+                    <h3>Typography</h3>
+                    <div class="select-wrapper">
+                        <select id="fontFamilySelector">
+                            <option value="'Inter', sans-serif">Inter (Modern, Clean)</option>
+                            <option value="'Outfit', sans-serif">Outfit (Geometric, Bold)</option>
+                            <option value="'Georgia', serif">Georgia (Classic, Elegant)</option>
+                            <option value="'Courier New', monospace">Courier (Technical)</option>
+                        </select>
+                        <i data-feather="chevron-down"></i>
+                    </div>
+                </div>
+
+                <div class="control-group" id="group-layout">
+                    <h3>Resume Layout</h3>
+                    <div class="select-wrapper">
+                        <select id="layoutSelector">
+                            <option value="layout-single-column">Standard (Single Column)</option>
+                            <option value="layout-modern">Modern (Accent Header)</option>
+                            <option value="layout-minimal">Minimalist (Clean)</option>
+                            <option value="layout-two-column">Two Column (Professional)</option>
+                        </select>
+                        <i data-feather="grid"></i>
+                    </div>
+                </div>
+
+                <div class="control-group section-list">
+                    <h3>Document Sections</h3>
+                    <p class="subtitle">Drag to reorder sections</p>
+                    <div id="sectionList" class="sortable-list">
+                    </div>
+                </div>
+            </div>
+
+            <div id="placeholder-footer" class="hidden-element"></div>
+            <div class="sidebar-footer sidebar-footer-wrap" id="group-footer">
+                <button class="btn-primary btn-full-width" id="atsScoreBtn">
+                    <i data-feather="check-circle"></i> Run ATS Optimizer
+                </button>
+                <div class="export-btn-group" style="margin-bottom: 8px;">
+                    <button class="btn-export" id="exportPdfBtn" title="Download High-Quality PDF">PDF</button>
+                    <button class="btn-export" id="exportWordBtn" title="Download Word Document">Word</button>
+                    <button class="btn-export" id="exportImgBtn" title="Export Image">Image</button>
+                </div>
+                <div class="export-btn-group">
+                    <button class="btn-export" id="exportDataBtn" title="Download Resume Data as JSON"
+                        style="flex: 1;"><i data-feather="download" class="icon-sm"></i> Export Data</button>
+                    <button class="btn-export" id="importDataBtn" title="Load Resume Data from JSON" style="flex: 1;"><i
+                            data-feather="upload" class="icon-sm"></i> Import Data</button>
+                    <input type="file" id="importDataInput" accept=".json" style="display: none;">
+                </div>
+            </div>
+        </aside>
+
+        <main class="workspace" id="workspace">
+            <div class="workspace-background"></div>
+
+            <div class="preview-container">
+                <div class="a4-page" id="resumePreview">
+                </div>
+
+                <div id="textFormattingToolbar" class="floating-toolbar glass-panel floating-toolbar-absolute">
+                    <button class="format-btn" data-command="bold" title="Bold"><i data-feather="bold"></i></button>
+                    <button class="format-btn" data-command="italic" title="Italic"><i
+                            data-feather="italic"></i></button>
+                    <div class="toolbar-divider"></div>
+                    <div class="color-picker-wrapper" title="Text Color">
+                        <i data-feather="edit-2"></i>
+                        <input type="color" id="textColorPicker" class="color-input">
+                    </div>
+                </div>
+
+                <div class="instruction-toast">
+                    <i data-feather="mouse-pointer"></i> Click any text to edit directly. Select text for styling
+                    options.
+                </div>
+            </div>
+
+            <div class="zoom-controls glass-panel">
+                <button class="zoom-btn" id="zoomInBtn" title="Zoom In"><i data-feather="zoom-in"></i></button>
+                <div class="zoom-level" id="zoomLevelDisplay">100%</div>
+                <button class="zoom-btn" id="zoomOutBtn" title="Zoom Out"><i data-feather="zoom-out"></i></button>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="mobileToolsModal">
+        <div class="modal-content glass-panel mobile-tools-content">
+            <div class="modal-header">
+                <h2>Options & Export</h2>
+                <button class="btn-icon close-mobile-tools" id="closeMobileToolsBtn"><i data-feather="x"></i></button>
+            </div>
+            <div class="modal-body mobile-tools-body" id="mobileToolsModalBody">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="addSectionModal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2>Add New Section</h2>
+                <button class="btn-icon close-modal"><i data-feather="x"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Section Title</label>
+                    <input type="text" id="newSectionTitle" placeholder="e.g. Clinical Rotations, Exhibitions">
+                </div>
+                <div class="form-group">
+                    <label>Section Type</label>
+                    <select id="newSectionType">
+                        <option value="list">List (Experience, Education)</option>
+                        <option value="tags">Tags (Skills, Technologies)</option>
+                        <option value="text">Paragraph (Summary, Bio)</option>
+                    </select>
+                </div>
+                <button class="btn-primary mt-20" id="confirmAddSection">Create Section</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="resetConfirmModal">
+        <div class="modal-content glass-panel" style="max-width: 400px; text-align: center;">
+            <div class="modal-body" style="padding: 30px 20px;">
+                <i data-feather="alert-triangle"
+                    style="width: 48px; height: 48px; color: #ef4444; margin-bottom: 16px;"></i>
+                <h2 style="margin-bottom: 10px;">Reset to Template?</h2>
+                <p style="color: var(--text-muted); margin-bottom: 24px;">Are you sure you want to discard your current
+                    progress and load the Best-in-Class Demo Template? This action cannot be undone.</p>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button class="btn-icon" id="cancelResetBtn"
+                        style="flex: 1; width: auto; padding: 12px; border-radius: 8px; font-weight: 600;">Cancel</button>
+                    <button class="btn-primary" id="confirmResetBtn"
+                        style="flex: 1; background: #ef4444; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);">Reset
+                        Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
