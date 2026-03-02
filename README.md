@@ -48,16 +48,3 @@ Project ko live yahan dekhein:
 
 ---
 
-## 📂 Professional Folder Structure
-Ek achha project hamesha well-organized hota hai. Yahan hamare code ka structure hai:
-
-```text
-📦 NexResume
- ┣ 📂 assets
- ┃ ┣ 📂 css
- ┃ ┃ ┗ 📜 style.css       # Main stylesheet with modern CSS practices
- ┃ ┣ 📂 images            # Project images and icons
- ┃ ┗ 📂 js
- ┃   ┗ 📜 script.js       # Interactive functionalities
- ┣ 📜 index.html          # Main HTML structure
- ┗ 📜 README.md           # Project documentation
